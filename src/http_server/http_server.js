@@ -1,14 +1,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as http from 'http';
-import { WebSocketServer } from 'ws';
+
 import * as dotenv from 'dotenv';
 
 dotenv.config();
-
-
-let HTTP_PORT = process.env.HTTP_PORT ?? 8181;
-let WS_PORT = process.env.WS_PORT ?? 3000;
 
 export const httpServer = http.createServer(function (req, res) {
 
@@ -25,20 +21,3 @@ export const httpServer = http.createServer(function (req, res) {
     res.end(data);
   });
 });
-
-const wss = new WebSocketServer({ port: WS_PORT });
-
-wss.on('connection', function (wsSoket) {
-  console.log('new connection',wsSoket);
-
-  wsSoket.on('message',(msg)=>{
-    console.log('message',JSON.parse(msg,null,4));
-  });
-
-  wsSoket.on('close',()=>{
-    console.log('close');
-  });
-
-
-});
-
