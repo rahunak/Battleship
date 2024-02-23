@@ -1,10 +1,11 @@
 export function parseRequest (requestStr) {
 
-  function innerParser(innerData) {
+  function innerParser (innerData) {
     try {
       let parsedInnerData = JSON.parse(innerData);
       return parsedInnerData;
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Error: JSON.parse innerParser', error);
       return {error:'Error: JSON.parse'};
     }
@@ -14,7 +15,8 @@ export function parseRequest (requestStr) {
     let parsedData = JSON.parse(requestStr);
     const {id,type, data } = parsedData;
     return { type ,id, data: innerParser(data) };
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error: JSON.parse  in parseRequest()', error);
     // generateRenResponse('reg','Error: JSON.parse');
     return {error:'Error: JSON.parse'};

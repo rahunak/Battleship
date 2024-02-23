@@ -32,6 +32,36 @@
             "error",
             "always"
         ],
-        "no-undef": "off"
+        "no-undef": "off",
+        "brace-style": [
+            "warn",
+            "stroustrup"
+        ],
+        "keyword-spacing": [
+            "error",
+            {
+                "overrides": {
+                    "if": {
+                        "after": true
+                    },
+                    "for": {
+                        "after": true
+                    },
+                    "while": {
+                        "after": true
+                    },
+                    "static": {
+                        "after": true
+                    },
+                    "as": {
+                        "after": true
+                    }
+                }
+            }
+        ],
+        "space-before-function-paren": [
+            "error",
+            "always"
+        ]
     }
 }

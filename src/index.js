@@ -3,7 +3,7 @@ import { httpServer } from './http_server/http_server.js';
 import { wss as wsServer } from './ws_server/ws_server.js';
 import {registration} from './controllers/registration.js';
 import {parseRequest} from './helpers/parse_request.js';
-
+import { webSocketsDb } from './store/store.js';
 dotenv.config();
 let HTTP_PORT = process.env.HTTP_PORT ?? 8181;
 
@@ -22,10 +22,23 @@ wsServer.on('connection', function (wsSoket) {
     console.log('message',JSON.parse(msg,null,4));
     const parsedData = parseRequest(msg);
     console.log('parsedData',parsedData);
+    // push in our store WebSocket entity.
+    webSocketsDb[parsedData.id] = wsSoket;
+
     if (parsedData.hasOwnProperty('error')){
       console.error('error is here');
-    }else{
-      registration(parsedData);
+      //Add response here
+    }
+    else {
+      switch (parsedData.type) {
+      case 'reg':
+        registration(parsedData);
+        break;
+
+      default:
+        break;
+      }
+
     }
   });
 
