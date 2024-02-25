@@ -1,33 +1,18 @@
 import { generateResponse } from '../helpers/generate_response.js';
-import { roomsDb,webSocketsDb } from '../store/store.js';
+import { roomsDb,usersDb,webSocketsDb } from '../store/store.js';
 
-export async function update_room (socketId){
 
+export  function update_room (){
+//Нужно send rooms list, where only one player inside !!!
   try {
-    console.log('roomsDb',roomsDb);
-    // let roomsWithOnePlayer = roomsDb.filter(room => room.data.players.length === 1);
-/*
-{
-    type: "update_room",
-    data:
-        [
-            {
-                roomId: <number | string>,
-                roomUsers:
-                    [
-                        {
-                            name: <string>,
-                            index: <number | string>,
-                        }
-                    ],
-            },
-        ],
-    id: 0,
-}
-*/
-    let answer = await generateResponse('update_room',[]);
-    console.log('\n roomsDb',roomsDb);
-    webSocketsDb[socketId].send(answer);
+    let roomsWithOnePlayer = Array.from(roomsDb.values());
+    console.log('roomsWithOnePlayer',roomsWithOnePlayer);
+    // update info about rooms for all users
+    let preparedResponse = generateResponse('update_room',roomsWithOnePlayer);
+
+    Object.keys(webSocketsDb).forEach(id => {
+      webSocketsDb[id].send(preparedResponse);
+    });
   }
   catch (error) {
     console.error('Error: JSON.parse  in update_room()', error);

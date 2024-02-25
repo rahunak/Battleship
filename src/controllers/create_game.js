@@ -1,19 +1,24 @@
 import { generateResponse } from '../helpers/generate_response.js';
-import { usersDb,webSocketsDb } from '../store/store.js';
+import { usersDb,gamesDb,webSocketsDb } from '../store/store.js';
+import {generate_new_entity} from '../helpers/generate_new_entity.js';
 
-export async function create_game (socketId){
+export  function create_game (parsedData, userId){
 
   try {
-    console.log('create_game',);
 
-    let answer = await generateResponse('create_game',{
-      idGame: 'idGame- testNumberOrStr',
-      idPlayer:'idPlayer- testNumberOrStr',
+    console.log('\n\n +  create_game userId',userId);
+    let gameId = generate_new_entity(gamesDb);
+    gamesDb.set(        {
+      idGame: gameId,
+      idPlayer: userId,
+    });
+    let answer =  generateResponse('create_game',{
+      idGame: gameId,
+      idPlayer:userId,
     });
 
-    console.log('\nusersDb',usersDb);
     //reg
-    webSocketsDb[socketId].send(answer);
+    webSocketsDb[userId].send(answer);
 
   }
   catch (error) {

@@ -2,8 +2,7 @@ export function parseRequest (requestStr) {
 
   function innerParser (innerData) {
     try {
-      console.log("innerParser",innerData)
-      let parsedInnerData = JSON.parse(innerData);
+      let parsedInnerData = JSON.parse(innerData.toString());
       return parsedInnerData;
     }
     catch (error) {
@@ -14,8 +13,7 @@ export function parseRequest (requestStr) {
   }
 
   try {
-    let parsedData = JSON.parse(requestStr);
-    console.log("parent - parsedData",parsedData)
+    let parsedData = JSON.parse(requestStr.toString());
     const {id,type, data } = parsedData;
     return { type ,id, data: innerParser(data) };
   }

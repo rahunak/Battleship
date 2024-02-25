@@ -1,4 +1,4 @@
-export async function generateResponse (typeOfAction, responseData) {
+export  function generateResponse (typeOfAction, responseData) {
   function innerStringify (comingData){
     try {
       return JSON.stringify(comingData);
@@ -9,7 +9,7 @@ export async function generateResponse (typeOfAction, responseData) {
     }
   }
   try {
-    return JSON.stringify({ type:typeOfAction,data:innerStringify(responseData), id:0});
+    return (JSON.stringify({ type:typeOfAction,data:innerStringify(responseData), id:0})).toString();
   }
   catch (error) {
     console.error('Error: JSON.stringify in generateResponse()', error);

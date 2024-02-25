@@ -1,11 +1,11 @@
 import { generateResponse } from '../helpers/generate_response.js';
 import { usersDb,webSocketsDb } from '../store/store.js';
 
-export async function update_winners (socketId){
+export  function update_winners (socketId){
 
   try {
     console.log('update_winners',socketId);
-/**
+    /**
  * {
     type: "update_winners",
     data:
@@ -19,7 +19,7 @@ export async function update_winners (socketId){
 }
  */
 
-    let answer = await generateResponse('update_winners',[]);
+    let answer =  generateResponse('update_winners',[]);
     console.log('\n update_winners',usersDb);
     webSocketsDb[socketId].send(answer);
   }

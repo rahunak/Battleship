@@ -1,5 +1,6 @@
-export const { usersDb,roomsDb, webSocketsDb } = {
-  usersDb: [{ id: 199, name: 'test', password: 'test' }],
-  roomsDb: [],
+export const { usersDb,roomsDb,gamesDb, webSocketsDb } = {
+  usersDb: new Map(),
+  roomsDb: new Map(),
+  gamesDb: new Map(),
   webSocketsDb: {},
 };
