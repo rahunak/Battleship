@@ -10,27 +10,12 @@ export  function add_ships (parsedData,socketId){
     console.log('gamesDb', gamesDb);
     console.log('add_ships', parsedData);
     let {gameId, ships, indexPlayer} = parsedData.data;
-    // let answer =  generateResponse('add_ships',{
-    //   gameId: '<number | string>',
-    //   ships:
-    //     [
-    //       {
-    //         position: {
-    //           x: '<number>',
-    //           y: '<number>',
-    //         },
-    //         direction: '<boolean>',
-    //         length: '<number>',
-    //         type: '"small"|"medium"|"large"|"huge"',
-    //       }
-    //     ],
-    //   indexPlayer: '<number | string>, /* id of the player in the current game session */'
-    // });
-
-    webSocketsDb[socketId].send(generateResponse('start_game', {
-      ships,
-      currentPlayerIndex:indexPlayer,
-    }));
+    // gamesDb.set(gameId,{});
+    //Только после того как 2-а игрока добавят корабли к 1-йкомнате
+    // webSocketsDb[socketId].send(generateResponse('start_game', {
+    //   ships,
+    //   currentPlayerIndex:indexPlayer,
+    // }));
   }
   catch (error) {
     console.error('Error in add_ships()', error);

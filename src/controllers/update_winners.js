@@ -1,27 +1,16 @@
 import { generateResponse } from '../helpers/generate_response.js';
 import { usersDb,webSocketsDb } from '../store/store.js';
 
-export  function update_winners (socketId){
+export  function update_winners (){
 
   try {
-    console.log('update_winners',socketId);
-    /**
- * {
-    type: "update_winners",
-    data:
-        [
-            {
-                name: <string>,
-                wins: <number>,
-            }
-        ],
-    id: 0,
-}
- */
+    let users = Array.from(usersDb.values());
 
     let answer =  generateResponse('update_winners',[]);
-    console.log('\n update_winners',usersDb);
-    webSocketsDb[socketId].send(answer);
+
+    Object.keys(webSocketsDb).forEach(id => {
+      webSocketsDb[id].send(answer);
+    });
   }
   catch (error) {
     console.error('Error: JSON.parse  in update_winners()', error);

@@ -7,7 +7,6 @@ import {update_room} from '../controllers/update_room.js';
 export function create_room (parsedData,userId){
 
   try {
-    console.log('\n \n + create_room parsedData' , parsedData);
     console.log('create_room usersDb--', usersDb);
     console.log('create_room socketId', userId);
     if (usersDb.has(userId) === false){
@@ -17,6 +16,7 @@ export function create_room (parsedData,userId){
 
     //create_room
     let roomId = generate_new_entity(roomsDb);
+
     roomsDb.set(roomId,{
       roomId: roomId,
       roomUsers: [{
@@ -25,11 +25,7 @@ export function create_room (parsedData,userId){
       }],
     });
 
-    //create_game
-    // create_game(userId);
-    console.log('create_room update_room');
     update_room ();
-
 
   }
   catch (error) {

@@ -8,7 +8,7 @@ export  function create_game (parsedData, userId){
 
     console.log('\n\n +  create_game userId',userId);
     let gameId = generate_new_entity(gamesDb);
-    gamesDb.set(        {
+    gamesDb.set(gameId, {
       idGame: gameId,
       idPlayer: userId,
     });

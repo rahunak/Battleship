@@ -7,10 +7,10 @@ import {update_winners} from '../controllers/update_winners.js';
 export  function registration (userData,userId){
 
   try {
+    console.log('registration userData',userData,'userId',userId);
     let {data} = userData;
     // id is socketId
     usersDb.set( userId , {id:userId,name:data.name,password:data.password});
-
     let answer =  generateResponse('reg',{
       name: data.name,
       index:userId,
@@ -21,9 +21,9 @@ export  function registration (userData,userId){
     //reg
     webSocketsDb[userId].send(answer);
     //update_rooms
-    update_room(userId);
+    update_room();
     //update_winners
-    update_winners(userId);
+    update_winners();
 
   }
   catch (error) {

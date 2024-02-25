@@ -34,7 +34,7 @@ httpServer.on('close', (socket) => {
 
 wsServer.on('connection', function (wsSoket) {
   console.log('wsServer new connection',process.pid);
-  let userId =  generate_new_entity(usersDb);
+  let userId = generate_new_entity(usersDb);
   // userId is also socket Id
   console.log(`User with id: ${userId} is connected`);
 
