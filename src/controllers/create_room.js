@@ -15,7 +15,7 @@ export function create_room (parsedData,userId){
     }
 
     //create_room
-    let roomId = generate_new_entity(roomsDb);
+    let roomId = generate_new_entity('roomsDb');
 
     roomsDb.set(roomId,{
       roomId: roomId,
