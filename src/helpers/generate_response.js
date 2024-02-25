@@ -1,4 +1,4 @@
-export async function generateRenResponse (typeOfAction, responseData) {
+export async function generateResponse (typeOfAction, responseData) {
   function innerStringify (comingData){
     try {
       return JSON.stringify(comingData);
@@ -12,7 +12,7 @@ export async function generateRenResponse (typeOfAction, responseData) {
     return JSON.stringify({ type:typeOfAction,data:innerStringify(responseData), id:0});
   }
   catch (error) {
-    console.error('Error: JSON.stringify in generateRenResponse()', error);
+    console.error('Error: JSON.stringify in generateResponse()', error);
     return {error:'Error: JSON.stringify'};
   }
 }
