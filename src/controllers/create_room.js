@@ -7,8 +7,6 @@ import {update_room} from '../controllers/update_room.js';
 export function create_room (parsedData,userId){
 
   try {
-    console.log('create_room usersDb--', usersDb);
-    console.log('create_room socketId', userId);
     if (usersDb.has(userId) === false){
       console.error('Error in create_room() usersDb.has(userId) returned false', error);
       return;

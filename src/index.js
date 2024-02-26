@@ -40,7 +40,6 @@ wsServer.on('connection', function (wsSoket) {
 
   wsSoket.on('message',(message,isBinary)=>{
     const msg = isBinary ? message.toString() : message;
-    // console.log('message',JSON.parse(msg.toString(),null,4));
     const parsedData = parseRequest(msg.toString());
     if (parsedData.hasOwnProperty('error')){
       console.error('error in parse request message',msg);
@@ -58,7 +57,6 @@ wsServer.on('connection', function (wsSoket) {
         create_room(parsedData,userId);
         break;
       case 'add_user_to_room':
-        console.log('=======================================');
         add_user_to_room(parsedData,userId);
         break;
       case 'create_game':

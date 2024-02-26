@@ -7,24 +7,45 @@ import {update_winners} from '../controllers/update_winners.js';
 export  function registration (userData,userId){
 
   try {
-    console.log('registration userData',userData,'userId',userId);
     let {data} = userData;
     // id is socketId
-    usersDb.set( userId , {id:userId,name:data.name,password:data.password});
-    let answer =  generateResponse('reg',{
-      name: data.name,
-      index:userId,
-      error: false,
-      errorText: '',
+    let doWeHaveUser = Array.from(usersDb.values()).some((user)=>{
+      return user.name.trim() === data.name.trim() && user.password.trim() === data.password.trim();
     });
 
-    //reg
-    webSocketsDb[userId].send(answer);
-    //update_rooms
-    update_room();
-    //update_winners
-    update_winners();
+    if (doWeHaveUser){
+      Array.from(usersDb.values()).find((user)=>{
+        if (user.name.trim() === data.name.trim() && user.password.trim() === data.password.trim()){
+          userId = user.id;
+        }
+      });
+      let answer =  generateResponse('reg',{
+        name: data.name,
+        index:userId,
+        error: true,
+        errorText: 'User with the same name and password already exist.',
+      });
+      console.log('User with the same name and password already exist.');
+      webSocketsDb[userId].send(answer);
+    }
+    else {
 
+
+      usersDb.set( userId , {id:userId,name:data.name,password:data.password});
+      let answer =  generateResponse('reg',{
+        name: data.name,
+        index:userId,
+        error: false,
+        errorText: '',
+      });
+
+      //reg
+      webSocketsDb[userId].send(answer);
+      //update_rooms
+      update_room();
+      //update_winners
+      update_winners();
+    }
   }
   catch (error) {
     console.error('error in registration()', error);

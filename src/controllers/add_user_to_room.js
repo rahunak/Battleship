@@ -5,40 +5,36 @@ import {create_game} from '../controllers/create_game.js';
 export  function add_user_to_room (userData,socketId){
 
   try {
-    console.log('+++++++++++++++++ add_user_to_room',userData,'socketId',socketId);
     let {indexRoom} = userData.data;
-    console.log('===============roomsDb',roomsDb.get(indexRoom));
     if (roomsDb.get(indexRoom).roomUsers.some(user => user.index === socketId)){
-      console.log('you already in this room');
-      //needimplement check on adding the same user to one room
+      return;
     }
-    if (!gamesDb.has(indexRoom)){
-      gamesDb.set(indexRoom,[
+    if (!roomsDb.has(indexRoom)){
+      roomsDb.set(indexRoom,
         {
-          socketId,
-          userName:usersDb.get(socketId).name,
+          index:socketId,
+          name:usersDb.get(socketId).name,
         }
-      ]
       );
     }
     else {
-      let waitingUsers = gamesDb.get(indexRoom);
-      console.log('waitingUsers',waitingUsers);
-      gamesDb.set(indexRoom,[...waitingUsers,{
-        socketId,
-        userName:usersDb.get(socketId).name,
+      let waitingUsers = roomsDb.get(indexRoom);
+      roomsDb.set(indexRoom,[...waitingUsers.roomUsers,{
+        index:socketId,
+        name:usersDb.get(socketId).name,
       }
       ]);
-      gamesDb.get(indexRoom).forEach(player => {
-        webSocketsDb[player.socketId].send(generateResponse('create_game',{
+
+      Array.from(roomsDb.get(indexRoom)).forEach(player => {
+        webSocketsDb[player.index].send(generateResponse('create_game',{
           idGame: indexRoom,
-          idPlayer:socketId,
+          idPlayer:player.index,
         }));
       });
 
     }
 
-    console.log('add_user_to_room gamesDb',gamesDb.get(indexRoom));
+
     // roomsDb.delete(data.indexRoom);
     // create_game('',socketId);
   }

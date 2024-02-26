@@ -6,17 +6,12 @@ import {create_game} from '../controllers/create_game.js';
 export  function add_ships (parsedData,socketId){
 
   try {
-
-    console.log('add_ships socketId', socketId);
-    console.log('add_ships', parsedData);
     let {gameId, ships, indexPlayer} = parsedData.data;
- console.log('gamesDb', gamesDb);
-  console.log('\n \n ==>roomsDb', roomsDb.get(1).roomUsers);
+
     if (gamesDb.has(gameId)) {
 
       let gameData = gamesDb.get(gameId);
 
-      console.log('gameData=========>',gameData);
       gamesDb.set(gameId,[...gameData,{
         gameId,
         ships,
